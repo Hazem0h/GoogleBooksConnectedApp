@@ -72,8 +72,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             case 3:
                 colorId = R.color.three;
                 break;
+            case 4:
+                colorId = R.color.four;
+                break;
             case 5:
                 colorId = R.color.four;
+                break;
             default:
                 colorId = R.color.gray;
         }
