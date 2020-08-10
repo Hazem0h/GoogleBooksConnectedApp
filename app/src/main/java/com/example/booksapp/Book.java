@@ -1,5 +1,12 @@
 package com.example.booksapp;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.security.acl.LastOwnerException;
+
 public class Book {
     private String title;
     private String authors;
@@ -11,6 +18,22 @@ public class Book {
         this.authors = authors;
         this.rating = rating;
         this.date = date;
+    }
+    public Book(String title, JSONArray authors, double rating, String data){
+        this.title = title;
+        this.rating = rating;
+        this.date = date;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i<authors.length(); i++){
+            try {
+                stringBuilder.append(authors.getString(i));
+                stringBuilder.append(", ");
+            }catch (JSONException e){
+                Log.e("EXCEPTION", "ERROR in reading the authors array");
+                this.authors = "";
+            }
+        }
+        this.authors = stringBuilder.toString();
     }
 
     public String getTitle() {
