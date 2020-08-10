@@ -27,11 +27,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.Listene
 
     //data members
     private ArrayList<Book> books = new ArrayList<Book>();
-    private static final String query = "https://www.googleapis.com/books/v1/volumes?q=android";
+    private static String query;
     private MyAdapter rvAdapter;
     static final int LOADER_ID = 1;
     static final String CLIENT_FAIL = "Client side failure";
     static final String SERVER_FAIL = "Server side failure";
+    static final String QUERY_PREFIX = "https://www.googleapis.com/books/v1/volumes?q=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.Listene
 
         //the behaviour will depend on internet connection
         if (isConnected()){
+            setupQuery();
             setupRecyclerView();
             getSupportLoaderManager().initLoader(LOADER_ID, null, MainActivity.this).forceLoad();
         }else{
@@ -110,5 +112,22 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.Listene
         final ConnectivityManager coMgr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = coMgr.getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnected();
+    }
+
+    private void setupQuery(){
+        Intent parentIntent = getIntent();
+        String searchItems = parentIntent.getStringExtra(StartupActivity.QUERY_TAG);
+        String[] itemArray = searchItems.split(" ");
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(QUERY_PREFIX);
+        if(itemArray == null){
+            queryBuilder.append(searchItems);
+        }else{
+            for (int i = 0; i<itemArray.length; i++){
+                queryBuilder.append(itemArray[i]);
+            }
+        }
+        query = queryBuilder.toString();
+
     }
 }
