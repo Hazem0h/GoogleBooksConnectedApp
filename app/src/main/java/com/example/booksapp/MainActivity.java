@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.mtp.MtpConstants;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +32,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -58,7 +61,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.Listene
 
     @Override
     public void controlMethod(int position) {
-        Toast.makeText(this, "Clicked on item"+position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Clicked on item"+position, Toast.LENGTH_SHORT).show();
+        Uri bookUri = Uri.parse(books.get(position).getUri());
+        Intent i = new Intent(Intent.ACTION_VIEW, bookUri);
+        startActivity(i);
     }
 
     void testPopulateArray(){
@@ -107,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.Listene
                         currentBook.getString("title"),
                         currentBook.getJSONArray("authors"),
                         currentRating,
-                        currentBook.getString("publishedDate")));
+                        currentBook.getString("publishedDate"),
+                        currentBook.getString("infoLink")));
             }
 
             rvAdapter.notifyDataSetChanged();

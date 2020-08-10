@@ -12,6 +12,7 @@ public class Book {
     private String authors;
     private double rating;
     private String date;
+    private String uri;
 
     public Book(String title, String authors, double rating, String date) {
         this.title = title;
@@ -19,10 +20,11 @@ public class Book {
         this.rating = rating;
         this.date = date;
     }
-    public Book(String title, JSONArray authors, double rating, String date){
+    public Book(String title, JSONArray authors, double rating, String date, String uri){
         this.title = title;
         this.rating = rating;
         this.date = date;
+        this.uri = uri;
         StringBuilder stringBuilder = new StringBuilder();
 
         if(authors == null){
@@ -41,6 +43,18 @@ public class Book {
             }
             this.authors = stringBuilder.toString();
         }
+    }
+
+    public void setAuthors(String authors) {
+        this.authors = authors;
+    }
+
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public String getTitle() {
