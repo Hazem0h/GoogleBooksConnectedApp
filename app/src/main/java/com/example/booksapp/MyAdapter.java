@@ -33,8 +33,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Book currentBook = bookArrayList.get(position);
-        holder.ratingTextView.setText(
-                currentBook.getRating()+"");
+        double rating = currentBook.getRating();
+        if(rating == -1){
+            holder.ratingTextView.setText("?");
+        }else {
+            holder.ratingTextView.setText(
+                    currentBook.getRating() + "");
+        }
         holder.titleTextView.setText(
                 currentBook.getTitle());
         holder.authorTextView.setText(
@@ -67,8 +72,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             case 3:
                 colorId = R.color.three;
                 break;
-            default:
+            case 5:
                 colorId = R.color.four;
+            default:
+                colorId = R.color.gray;
         }
         gradientDrawable.setColor(viewHolder.hostContext.getResources().getColor(colorId));
     }

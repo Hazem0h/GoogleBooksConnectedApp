@@ -19,21 +19,28 @@ public class Book {
         this.rating = rating;
         this.date = date;
     }
-    public Book(String title, JSONArray authors, double rating, String data){
+    public Book(String title, JSONArray authors, double rating, String date){
         this.title = title;
         this.rating = rating;
         this.date = date;
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i<authors.length(); i++){
-            try {
-                stringBuilder.append(authors.getString(i));
-                stringBuilder.append(", ");
-            }catch (JSONException e){
-                Log.e("EXCEPTION", "ERROR in reading the authors array");
-                this.authors = "";
+
+        if(authors == null){
+            this.authors = "";
+        }else {
+            for (int i = 0; i < authors.length(); i++) {
+                try {
+                    stringBuilder.append(authors.getString(i));
+                    if(i != authors.length() -1 ){
+                        stringBuilder.append(", ");
+                    }
+                } catch (JSONException e) {
+                    Log.e("EXCEPTION", "ERROR in reading the authors array");
+                    this.authors = "";
+                }
             }
+            this.authors = stringBuilder.toString();
         }
-        this.authors = stringBuilder.toString();
     }
 
     public String getTitle() {

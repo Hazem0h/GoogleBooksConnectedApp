@@ -15,6 +15,7 @@ import android.mtp.MtpConstants;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,19 +91,22 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.Listene
 
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
-        if (data == null){
-            return;
-        }
         JSONArray itemsArray;
         try {
             JSONObject root = new JSONObject(data);
             itemsArray = root.getJSONArray("items");
             for (int i = 0; i<itemsArray.length(); i++){
                 JSONObject currentBook = itemsArray.getJSONObject(i).getJSONObject("volumeInfo");
+                double currentRating = 0;
+                try{
+                    currentRating = currentBook.getDouble("averageRating");
+                }catch (JSONException e){
+                    currentRating = -1;
+                }
                 books.add(new Book(
                         currentBook.getString("title"),
                         currentBook.getJSONArray("authors"),
-                        currentBook.getDouble("averageRating"),
+                        currentRating,
                         currentBook.getString("publishedDate")));
             }
 

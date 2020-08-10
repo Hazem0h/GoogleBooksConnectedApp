@@ -8,4 +8,5 @@
     <color name="two">#FFE234</color>
     <color name="one">#FFA534</color>
     <color name="zero">#FF4545</color>
+    <color name="gray">@android:color/darker_gray</color>
 </resources>
